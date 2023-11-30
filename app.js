@@ -22,4 +22,26 @@
       expect(false).not.toBe(true);
     });
   });
+
+  describe('A suite with some shared setup', function () {
+    let foo = 0;
+
+    beforeEach(function () {
+      foo += 1;
+    });
+
+    afterEach(function () {
+      foo = 0;
+    });
+
+    beforeAll(function () {
+      foo = 1;
+    });
+
+    afterAll(function () {
+      foo = 0;
+    });
+
+    xit(); // Setup and Teardown
+  });
 })();

@@ -64,4 +64,18 @@
       }
     );
   });
+
+  describe('A spec using the fail function', function () {
+    function foo(x, callBack) {
+      if (x) {
+        callBack();
+      }
+    }
+
+    it('should not call the callBack', function () {
+      foo(false, function () {
+        fail('Callback has been called');
+      });
+    });
+  });
 })();

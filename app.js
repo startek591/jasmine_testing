@@ -125,4 +125,10 @@
       expect(foo).toEqual(1);
     });
   });
+
+  describe('Pending specs', function () {
+    xit('can be declared `xit`', function () {
+      expect(true).toBe(false);
+    });
+  });
 })();

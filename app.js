@@ -287,5 +287,33 @@
         });
       });
     });
+
+    describe('jasmine.arrayContaining', function () {
+      let foo;
+
+      beforeEach(function () {
+        foo = [1, 2, 3, 4];
+      });
+
+      it('matches arrays with some of the values', function () {
+        expect(foo).toEqual(jasmine.arrayContaining([3, 1]));
+        expect(foo).not.toEqual(jasmine.arrayContaining([6]));
+      });
+
+      describe('when used with a spy', function () {
+        it('is useful when comparing arguments', function () {
+          const callback = jasmine.createSpy('callback');
+          callback([1, 2, 3, 4]);
+
+          expect(callback).toHaveBeenCalledWith(
+            jasmine.arrayContaining([4, 2, 3])
+          );
+
+          expect(callback).not.toHaveBeenCalledWith(
+            jasmine.arrayContaining([5, 2])
+          );
+        });
+      });
+    });
   });
 })();

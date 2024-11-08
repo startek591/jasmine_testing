@@ -114,6 +114,7 @@ describe('A spec', function () {
   });
 });
 
+// fdescribe - suites tested first
 xdescribe('A spec', function () {
   let foo;
 
@@ -128,6 +129,7 @@ xdescribe('A spec', function () {
 });
 
 describe('Pending specs', function () {
+  //fit - tested tested first
   xit("can be declared 'xit'", function () {
     expect(true).toBe(false);
   });

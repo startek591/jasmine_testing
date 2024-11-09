@@ -314,3 +314,25 @@ describe('jasmine.stringMatching', function () {
     });
   });
 });
+
+describe('custom asymmetry', function () {
+  const tester = {
+    asymmetricMatch: function (actual) {
+      const secondValue = actual.split(',')[1];
+      return secondValue === 'bar';
+    },
+  };
+
+  it('dives in deep', function () {
+    expect('foo,bar,baz,quux').toEqual(tester);
+  });
+
+  describe('when used with a spy', function () {
+    it('is useful for comparing argments', function () {
+      const callback = jasmine.createSpy('callback');
+      callback('foo,bar,baz');
+
+      expect(callback).toHaveBeenCalledWith(tester);
+    });
+  });
+});

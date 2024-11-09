@@ -214,3 +214,103 @@ describe('Multiple spies, when created manually', function () {
     expect(tape.rewind).toBeDefined();
   });
 });
+
+describe('jasmine.any', function () {
+  it('matches any value', function () {
+    expect({}).toEqual(jasmine.any(Object));
+    expect(12).toEqual(jasmine.any(Number));
+  });
+
+  describe('when used with a spy', function () {
+    it('is useful for comparing arguments', function () {
+      const foo = jasmine.createSpy('foo');
+      foo(12, function () {
+        return true;
+      });
+
+      expect(foo).toHaveBeenCalledWith(
+        jasmine.any(Number),
+        jasmine.any(Function)
+      );
+    });
+  });
+});
+
+describe('jasmine.objectContaining', function () {
+  let foo;
+
+  beforeEach(function () {
+    foo = {
+      a: 1,
+      b: 2,
+      bar: 'baz',
+    };
+  });
+
+  it('matches objects with the expect key/value pairs', function () {
+    expect(foo).toEqual(
+      jasmine.objectContaining({
+        bar: 'baz',
+      })
+    );
+    expect(foo).not.toEqual(
+      jasmine.objectContaining({
+        c: 37,
+      })
+    );
+  });
+
+  describe('when used with a spy', function () {
+    it('is useful for comparing arguments', function () {
+      const callback = jasmine.createSpy('callback');
+
+      callback({
+        bar: 'baz',
+      });
+
+      expect(callback).toHaveBeenCalledWith(
+        jasmine.objectContaining({ bar: 'baz' })
+      );
+    });
+  });
+});
+
+describe('jasmine.arrayContaining', function () {
+  let foo;
+
+  beforeEach(function () {
+    foo = [1, 2, 3, 4];
+  });
+
+  it('matches arrays with some of the values', function () {
+    expect(foo).toEqual(jasmine.arrayContaining([3, 1]));
+    expect(foo).not.toEqual(jasmine.arrayContaining([6]));
+  });
+
+  describe('when used with a spy', function () {
+    it('is useful when comparing arguments', function () {
+      const callback = jasmine.createSpy('callback');
+
+      callback([1, 2, 3, 4]);
+
+      expect(callback).toHaveBeenCalledWith(
+        jasmine.arrayContaining([4, 2, 3])
+      );
+
+      expect(callback).not.toHaveBeenCalledWith(
+        jasmine.arrayContaining([5, 2])
+      );
+    });
+  });
+});
+
+describe('jasmine.stringMatching', function () {
+  it('matches as a regexp', function () {
+    expect({ foo: 'bar' }).toEqual({
+      foo: jasmine.stringMatching(/^bar$/),
+    });
+    expect({ foo: 'foobarbaz' }).toEqual({
+      foo: jasmine.stringMatching('bar'),
+    });
+  });
+});

@@ -389,3 +389,39 @@ describe('Manually ticking the Jasmine Clock', function () {
     });
   });
 });
+
+describe('Using async/await', function () {
+  beforeEach(async function () {
+    await soon();
+    value = 0;
+  });
+
+  it('supports async execution of test preparation and expectations', async function () {
+    await soon();
+    value++;
+    expect(value).toGreaterThan(0);
+  });
+});
+
+// describe("long asynchronous specs", function() {
+//   beforeEach(async function() {
+//       await somethingSlow();
+//   }, 1000);
+
+//   it("takes a long time", function() {
+//       await somethingReallySlow();
+//   }, 10000);
+
+//   afterEach(function() {
+//       await somethingSlow();
+//       }, 1000);
+//   });
+
+//   function soon() {
+//       return new Promise(function(resolve, reject) {
+//           setTimeout(function() {
+//               resolve();
+//           }, 1);
+//       });
+//   }
+// });
